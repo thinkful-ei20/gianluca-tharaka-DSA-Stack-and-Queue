@@ -142,4 +142,39 @@ const squareDancePairing = people => {
 	}
 };
 
-squareDancePairing(arr);
+// squareDancePairing(arr);
+
+function getRandomInt(max) {
+	return Math.floor(Math.random() * Math.floor(max));
+}
+
+const theOphidianBank = (queue, size) => {
+
+	let person;
+	let attemps = 0;
+	let rejections = 0;
+
+	while(!isEmpty(queue)){
+		person = queue.dequeue();
+		attemps++;
+		if(getRandomInt(4) !== 0) {
+			rejections++;
+			queue.enqueue(person);
+		}
+	}
+
+	console.log('\nQueue size: ', size);
+	console.log(`\nTotal number of process attempts: ${attemps}`);
+	console.log(`\nTotal number of rejections: ${rejections}`);
+};
+
+
+const ophidianQueue = new Queue();
+const size = 100000;
+for(let i = 0; i < size; i++) {
+	ophidianQueue.enqueue(`Person: ${i}`);
+}
+
+theOphidianBank(ophidianQueue, size);
+
+

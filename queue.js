@@ -47,6 +47,10 @@ const peek = queue => {
 	return queue.first.data;
 };
 
+const isEmpty = queue => {
+	return queue.first === null;
+};
+
 const displayFromFront = queue => {
 	let current = queue.first;
 	while(current !== null) {
@@ -94,27 +98,6 @@ const displayFromBack = queue => {
  * Square Dance Pairing
  */
 
-const squareDancePairing = arr => {
-	const spares = new Queue();
-
-	let person = '';
-	for(let i = 0; i < arr.length; i++) {
-		if(!person) person = arr[i];
-		else {
-			if(arr[i][0] !== person[0]) {
-				console.log(`Female Dancer is: ${person[0] === 'F'? person[1] : arr[i][0]}
-				and the male dancer is: Frank ${person[0] === 'M'? person[1]: arr[i][0]}`);
-			} else {
-				spares.enqueue(arr[i]);
-			}
-		}
-	}
-
-	
-};
-
-
-
 const arr = [
 	['F', 'Jane'],
 	['M', 'Bob'],
@@ -126,3 +109,37 @@ const arr = [
 	['M', 'Sam'],
 	['M', 'David'],
 ];
+
+const squareDancePairing = people => {
+
+	const men = new Queue();
+	const women = new Queue();
+
+	let count = 0;
+
+	for(let i = 0; i < people.length; i++) {
+		if(people[i][0] === 'M') {
+			men.enqueue(people[i]);
+			count++;
+		} 
+		else {
+			women.enqueue(people[i]);
+			count++;
+		}
+	}
+
+	while(!isEmpty(men) && !isEmpty(women)) {
+		console.log(`Female dancer is: ${women.dequeue()[1]} and the male dancer is:${men.dequeue()[1]}`);
+		count -= 2;
+	}
+
+	if(!isEmpty(women)) {
+		console.log(`There are ${count} female dancers waiting to dance`);
+	}
+
+	if(!isEmpty(men)) {
+		console.log(`There are ${count} male dancers waiting to dance`);
+	}
+};
+
+squareDancePairing(arr);
